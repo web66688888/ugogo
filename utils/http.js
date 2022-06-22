@@ -2,7 +2,7 @@ import {
 	$http
 } from '@escook/request-miniprogram'
 uni.$http = $http
-$http.baseUrl = 'https://api-ugo-web.itheima.net'
+$http.baseUrl = 'https://api-hmugo-web.itheima.net'
 // 请求开始之前做一些事情
 $http.beforeRequest = function(options) {
 	uni.showLoading({

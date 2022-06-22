@@ -36,7 +36,7 @@
 			</view>
 		</view>
 		<!-- 回到顶部 -->
-		<view class="goTop icon-top"></view>
+		<view class="goTop icon-top" @click="backTop"></view>
 	</view>
 </template>
 
@@ -61,7 +61,14 @@ export default {
 		this.getCategoryList();
 		this.getFloorList();
 	},
-
+	//下拉刷新
+	async onPullDownRefresh() {
+		await this.getSwiperList();
+		await this.getCategoryList();
+		await this.getFloorList();
+		//停止下拉刷新
+		uni.stopPullDownRefresh();
+	},
 	methods: {
 		disableScroll(ev) {
 			this.pageHeight = ev.pageHeight + 'px';
@@ -101,6 +108,11 @@ export default {
 				});
 			}
 			this.FloorList = res.message;
+		},
+		backTop() {
+			uni.pageScrollTo({
+				scrollTop: 0
+			});
 		}
 	}
 };
