@@ -12,7 +12,16 @@ $http.beforeRequest = function(options) {
 
 }
 // 请求完成之后做一些事情
-$http.afterRequest = function() {
-	// 隐藏加载提示
+$http.afterRequest = function(options) {
+	if (options.data.meta.status !== 200) {
+		return uni.showToast({
+			title: '加载未完成',
+			icon: 'none',
+			duration: 1500
+		})
+
+	}
+	// console.log(options.data.meta.status);
+	// // 隐藏加载提示
 	uni.hideLoading()
 }

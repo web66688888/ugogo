@@ -76,37 +76,18 @@ export default {
 		async getSwiperList() {
 			const { data: res } = await uni.$http.get('/api/public/v1/home/swiperdata');
 			console.log(res);
-			if (res.meta.status !== 200) {
-				return uni.showToast({
-					title: '数据获取失败',
-					duration: 1500,
-					icon: 'none'
-				});
-			}
+
 			this.swiperList = res.message;
 		},
 		async getCategoryList() {
 			const { data: res } = await uni.$http.get('/api/public/v1/home/catitems');
 			console.log(res);
-			if (res.meta.status !== 200) {
-				return uni.showToast({
-					title: '获取失败',
-					duration: 1500,
-					icon: 'none'
-				});
-			}
+
 			this.CategoryList = res.message;
 		},
 		async getFloorList() {
 			const { data: res } = await uni.$http.get('/api/public/v1/home/floordata');
 			console.log(res);
-			if (res.meta.status !== 200) {
-				return uni.showToast({
-					title: '获取失败',
-					duration: 1500,
-					icon: 'none'
-				});
-			}
 			this.FloorList = res.message;
 		},
 		backTop() {

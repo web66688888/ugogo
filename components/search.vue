@@ -3,48 +3,69 @@
 	<view class="search" :class="{ focused: focused }">
 		<!-- 搜索框 -->
 		<view class="input-wrap" @click="goSearch">
-			<input class="input" type="text" :placeholder="placeholder" />
-			<span class="cancle" @click.stop="cancleSearch">取消</span>
+			<input
+				class="input"
+				type="text"
+				v-model="query"
+				@input="searchQuery"
+				:placeholder="placeholder"
+				@confirm="addHistoryList"
+			/>
+			<text class="cancle" @click.stop="cancleSearch">取消</text>
 		</view>
 		<!-- 搜索结果 -->
-		<view class="content">
+		<view class="content" v-if="historyList.length">
 			<view class="title">
 				搜索历史
-				<span class="clear"></span>
+				<text class="clear"></text>
 			</view>
 			<view class="history">
-				<navigator class="navigator" url="/subpkg/pages/list/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">智能电视</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">小米空气净化器</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">西门子洗碗机</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">华为手机</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">苹果</navigator>
-				<navigator class="navigator" url="/subpkg/pages/list/index">锤子</navigator>
+				<navigator
+					class="navigator"
+					:url="`/subpkg/pages/list/index?query=${item}`"
+					v-for="item in historyList"
+					:key="item"
+				>
+					{{ item }}
+				</navigator>
 			</view>
 			<!-- 结果 -->
-			<scroll-view scroll-y class="result">
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
-				<navigator class="navigator" url="/subpkg/pages/goods/index">小米</navigator>
+			<scroll-view v-if="query" scroll-y class="result">
+				<navigator
+					class="navigator"
+					:url="`/subpkg/pages/goods/index?query=${item.goods_id}`"
+					v-for="item in SearchList"
+					:key="item.goods_id"
+				>
+					{{ item.goods_name }}
+				</navigator>
 			</scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
+import { debounce } from 'lodash';
 export default {
 	data() {
 		return {
 			focused: false,
-			placeholder: ''
+			placeholder: '',
+			query: '',
+			SearchList: [],
+			historyList: uni.getStorageSync('history') || []
 		};
 	},
 	methods: {
+		addHistoryList() {
+			//去重
+			if (this.historyList.includes(this.query)) return;
+			this.historyList.push(this.query);
+			console.log(this.historyList);
+			//存入本地存储
+			uni.setStorageSync('history', this.historyList);
+		},
+
 		goSearch(ev) {
 			this.focused = true;
 			this.placeholder = '请输入您要搜索的内容';
@@ -60,7 +81,7 @@ export default {
 		cancleSearch() {
 			this.focused = false;
 			this.placeholder = '';
-
+			// this.query = '';
 			// 触发父组件自定义事件
 			this.$emit('search', {
 				pageHeight: 'auto'
@@ -68,7 +89,14 @@ export default {
 
 			// 显示tabBar
 			uni.showTabBar();
-		}
+		},
+		//防抖函数
+		searchQuery: debounce(async function() {
+			if (this.query.trim().length === 0) return;
+			const { data: res } = await uni.$http.get('/api/public/v1/goods/qsearch', { query: this.query });
+			console.log(res);
+			this.SearchList = res.message;
+		}, 500)
 	}
 };
 </script>

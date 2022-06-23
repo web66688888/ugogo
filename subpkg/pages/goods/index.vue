@@ -8,7 +8,7 @@
 		</swiper>
 		<!-- 基本信息 -->
 		<view class="meta">
-			<view class="price">￥{{ GoodsDetail.goods_price }}</view>
+			<view class="price">￥{{ GoodsDetail.goods_price || 0 }}</view>
 			<view class="name">{{ GoodsDetail.goods_name }}</view>
 			<view class="shipment">快递: 免运费</view>
 			<text class="collect icon-star">收藏</text>
