@@ -14,7 +14,7 @@
 			<text class="collect icon-star">收藏</text>
 		</view>
 		<!-- 商品详情 -->
-		<view class="detail"><rich-text></rich-text></view>
+		<view class="detail"><rich-text v-html="GoodsDetail.goods_introduce"></rich-text></view>
 		<!-- 操作 -->
 		<view class="action">
 			<button open-type="contact" class="icon-handset">联系客服</button>

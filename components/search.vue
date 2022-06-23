@@ -17,7 +17,7 @@
 		<view class="content" v-if="historyList.length">
 			<view class="title">
 				搜索历史
-				<text class="clear"></text>
+				<text class="clear" @click="clearHistory"></text>
 			</view>
 			<view class="history">
 				<navigator
@@ -57,6 +57,11 @@ export default {
 		};
 	},
 	methods: {
+		//清除历史记录
+		clearHistory() {
+			uni.removeStorageSync('history');
+			this.historyList = [];
+		},
 		addHistoryList() {
 			//去重
 			if (this.historyList.includes(this.query)) return;
