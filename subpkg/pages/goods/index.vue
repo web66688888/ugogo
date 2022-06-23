@@ -11,10 +11,16 @@
 			<view class="price">￥{{ GoodsDetail.goods_price || 0 }}</view>
 			<view class="name">{{ GoodsDetail.goods_name }}</view>
 			<view class="shipment">快递: 免运费</view>
+			<navigator url="/pages/webView/index">给我跳</navigator>
 			<text class="collect icon-star">收藏</text>
 		</view>
 		<!-- 商品详情 -->
-		<view class="detail"><rich-text v-html="GoodsDetail.goods_introduce"></rich-text></view>
+		<view class="detail">
+			<!-- 原生富文本 -->
+			<!-- 			<rich-text :nodes="GoodsDetail.goods_introduce"></rich-text>
+ -->
+			<view v-html="GoodsDetail.goods_introduce"></view>
+		</view>
 		<!-- 操作 -->
 		<view class="action">
 			<button open-type="contact" class="icon-handset">联系客服</button>
@@ -36,6 +42,12 @@ export default {
 		this.getGoodsDetail(option.query);
 	},
 	methods: {
+		// downLoad(item) {
+		// 	let url = encodeURIComponent(item.url);
+		// 	uni.navigateTo({
+		// 		url: './webView?url=' + url
+		// 	});
+		// },
 		async getGoodsDetail(goods_id) {
 			const { data: res } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id });
 			this.GoodsDetail = res.message;
