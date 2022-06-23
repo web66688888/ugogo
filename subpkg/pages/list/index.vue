@@ -7,7 +7,7 @@
 			<text>价格</text>
 		</view>
 		<!-- 商品列表 -->
-		<scroll-view class="goods" scroll-y>
+		<scroll-view class="goods" scroll-y @scrolltolower="getMore" :scroll-top="scrollTop" @scroll="scroll">
 			<view class="item" @click="goDetail(item.goods_id)" v-for="item in GoodsList" :key="item.goods_name">
 				<!-- 商品图片 -->
 				<image class="pic" :src="item.goods_small_logo"></image>
@@ -22,19 +22,29 @@
 				</view>
 			</view>
 			<!-- 加载更多 -->
-			<view class="getMore">正在加载...</view>
+			<view class="tips" v-if="GoodsList.length === 0">{{ msg }}</view>
+			<view class="getMore" v-else>正在加载...</view>
 		</scroll-view>
 	</view>
 </template>
 
 <script>
+import { debounce } from 'lodash';
 export default {
 	data() {
 		return {
-			q: {
-				query: ''
+			scrollTop: 0,
+			old: {
+				scrollTop: 0
 			},
-			GoodsList: []
+			msg: '',
+			q: {
+				query: '',
+				pagenum: 1,
+				pagesize: 5
+			},
+			GoodsList: [],
+			hasMore: true
 		};
 	},
 	onLoad(option) {
@@ -44,6 +54,22 @@ export default {
 		this.getGoodsList();
 	},
 	methods: {
+		goTop() {
+			console.log(111);
+			this.scrollTop = this.old.scrollTop;
+			this.$nextTick(function() {
+				this.scrollTop = 0;
+			});
+		},
+		scroll(e) {
+			console.log(e);
+			this.old.scrollTop = e.detail.scrollTop;
+		},
+		//防抖
+		getMore: debounce(function() {
+			this.q.pagenum++;
+			this.getGoodsList();
+		}, 500),
 		goDetail(id) {
 			uni.navigateTo({
 				url: `/subpkg/pages/goods/index?query=${id}`
@@ -51,10 +77,14 @@ export default {
 		},
 		async getGoodsList() {
 			console.log(this.q.query);
+			if (!this.hasMore) return this.goTop();
+			if (!this.q.query) return;
 			const { data: res } = await uni.$http.get('/api/public/v1/goods/search', this.q);
 			console.log(res);
-			this.GoodsList = res.message.goods;
-			console.log(this.GoodsList);
+			if (res.message.goods.length === 0) return (this.msg = '空空如也...');
+			this.GoodsList = [...this.GoodsList, ...res.message.goods];
+			//如果全部数据请求完了就停止发请求
+			this.hasMore = this.GoodsList.length < res.message.total;
 		}
 	}
 };
