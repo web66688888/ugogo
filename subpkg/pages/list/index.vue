@@ -8,7 +8,7 @@
 		</view>
 		<!-- 商品列表 -->
 		<scroll-view class="goods" scroll-y>
-			<view class="item" @click="goDetail" v-for="item in GoodsList" :key="item.cat_id">
+			<view class="item" @click="goDetail(item.goods_id)" v-for="item in GoodsList" :key="item.cat_id">
 				<!-- 商品图片 -->
 				<image class="pic" :src="item.goods_small_logo"></image>
 				<!-- 商品信息 -->
@@ -44,9 +44,9 @@ export default {
 		this.getGoodsList();
 	},
 	methods: {
-		goDetail() {
+		goDetail(id) {
 			uni.navigateTo({
-				url: '/subpkg/pages/goods/index'
+				url: `/subpkg/pages/goods/index?query=${id}`
 			});
 		},
 		async getGoodsList() {
