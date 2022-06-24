@@ -11,7 +11,8 @@
 			<view class="price">￥{{ GoodsDetail.goods_price || 0 }}</view>
 			<view class="name">{{ GoodsDetail.goods_name }}</view>
 			<view class="shipment">快递: 免运费</view>
-			<navigator url="/pages/webView/index">给我跳</navigator>
+			<!-- <navigator url="/pages/webView/index">给我跳</navigator> -->
+
 			<text class="collect icon-star">收藏</text>
 		</view>
 		<!-- 商品详情 -->
@@ -24,14 +25,16 @@
 		<!-- 操作 -->
 		<view class="action">
 			<button open-type="contact" class="icon-handset">联系客服</button>
-			<text class="cart icon-cart" @click="goCart">购物车</text>
-			<text class="add">加入购物车</text>
+
+			<text class="cart icon-cart" @click="goCart">购物车{{ cartCount }}</text>
+			<text class="add" @click="Add">加入购物车</text>
 			<text class="buy" @click="createOrder">立即购买</text>
 		</view>
 	</view>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
 export default {
 	data() {
 		return {
@@ -41,13 +44,23 @@ export default {
 	onLoad(option) {
 		this.getGoodsDetail(option.query);
 	},
+	computed: {
+		...mapState('m_cart', ['carts']),
+		...mapGetters('m_cart', ['cartCount'])
+	},
 	methods: {
-		// downLoad(item) {
-		// 	let url = encodeURIComponent(item.url);
-		// 	uni.navigateTo({
-		// 		url: './webView?url=' + url
-		// 	});
-		// },
+		Add() {
+			console.log('点击了');
+			const Goods = {
+				goods_id: this.GoodsDetail.goods_id, // 商品id
+				goods_name: this.GoodsDetail.goods_name, // 商品名称
+				goods_price: this.GoodsDetail.goods_price, // 商品价格
+				goods_small_logo: this.GoodsDetail.goods_small_logo, // 商品图片
+				goods_count: 1, // 购买数量
+				goods_state: true
+			};
+			this.$store.commit('m_cart/addToCart', Goods);
+		},
 		async getGoodsDetail(goods_id) {
 			const { data: res } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id });
 			this.GoodsDetail = res.message;
