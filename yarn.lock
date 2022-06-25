@@ -3,21 +3,21 @@
 
 
 "@escook/request-miniprogram@^0.2.1":
-  "integrity" "sha512-ueWV5YsaEm/ycQZuEjMiA88GFMhfBQSjy9GrP9omy4xAQajkGTbYIlnhzsDfWzRPmRC1fKmAiKMrCVcgS+SHcQ=="
-  "resolved" "https://registry.npmmirror.com/@escook/request-miniprogram/-/request-miniprogram-0.2.1.tgz"
-  "version" "0.2.1"
+  version "0.2.1"
+  resolved "https://registry.npmmirror.com/@escook/request-miniprogram/-/request-miniprogram-0.2.1.tgz"
+  integrity sha512-ueWV5YsaEm/ycQZuEjMiA88GFMhfBQSjy9GrP9omy4xAQajkGTbYIlnhzsDfWzRPmRC1fKmAiKMrCVcgS+SHcQ==
 
-"lodash@^4.17.21":
-  "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
-  "resolved" "https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz"
-  "version" "4.17.21"
+"@vant/weapp@^1.10.3":
+  version "1.10.3"
+  resolved "https://registry.npmmirror.com/@vant/weapp/-/weapp-1.10.3.tgz#c2df7437cf5784530835cf764cb7f4923f981e25"
+  integrity sha512-CcG5umI+zlJRN6hQXPeknOenPkVm6WBEgBaB6Y94kOmKLx9NHtHBdURwxuJEA4q4mxhUdOuf6sV7I8tZBnCVxw==
 
-"vue@^2.0.0":
-  "integrity" "sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ=="
-  "resolved" "https://registry.npmmirror.com/vue/-/vue-2.6.14.tgz"
-  "version" "2.6.14"
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-"vuex@^3.6.2":
-  "integrity" "sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw=="
-  "resolved" "https://registry.npmmirror.com/vuex/-/vuex-3.6.2.tgz"
-  "version" "3.6.2"
+vuex@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.npmmirror.com/vuex/-/vuex-3.6.2.tgz"
+  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==

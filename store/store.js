@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import cartModule from './cart'
+import userModule from './user'
 // 安装 Vuex
 Vue.use(Vuex);
 
@@ -10,7 +11,8 @@ const store = new Vuex.Store({
 		msg: 'vuex 成功运行...'
 	},
 	modules: {
-		'm_cart': cartModule
+		'm_cart': cartModule,
+		'm_address': userModule
 	}
 })
 export default store

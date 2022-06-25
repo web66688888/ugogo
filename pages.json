@@ -4,6 +4,7 @@
 			"path": "pages/index/index",
 			"style": {
 				"enablePullDownRefresh": true
+
 			}
 		},
 
@@ -22,7 +23,12 @@
 	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#ea4451",
-		"navigationBarTitleText": "黑马优购"
+		"navigationBarTitleText": "黑马优购",
+		"usingComponents": {
+			"van-swipe-cell": "./static/vant/swipe-cell/index",
+			"van-button": "./static/vant/button/index"
+		}
+
 	},
 	"tabBar": {
 		"color": "#333",
@@ -70,4 +76,5 @@
 			}
 		]
 	}]
+
 }
