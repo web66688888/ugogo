@@ -56,12 +56,23 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        /* 微信小程序特有相关 */
         "appid" : "wx41cef5682c386a8b",
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "packOptions" : {
+            "ignore" : [
+                {
+                    "type" : "folder",
+                    "value" : "static/uploads"
+                },
+                {
+                    "type" : "folder",
+                    "value" : "static/images"
+                }
+            ]
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

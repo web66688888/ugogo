@@ -56,7 +56,7 @@ export default {
 				goods_name: this.GoodsDetail.goods_name, // 商品名称
 				goods_price: this.GoodsDetail.goods_price, // 商品价格
 				goods_small_logo: this.GoodsDetail.goods_small_logo, // 商品图片
-				goods_count: 1, // 购买数量
+				goods_number: 1, // 购买数量
 				goods_state: true
 			};
 			this.$store.commit('m_cart/addToCart', Goods);

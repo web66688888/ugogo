@@ -14,12 +14,13 @@ export default {
 			return state.carts.every(item => item.goods_state === true)
 		},
 		total(state) {
-			return state.carts.filter(item => item.goods_state === true).reduce((acc, item) => acc += item.goods_count *
+			return state.carts.filter(item => item.goods_state === true).reduce((acc, item) => acc += item
+				.goods_number *
 				item.goods_price, 0)
 		},
 		totalCount(state) {
 
-			return state.carts.filter(item => item.goods_state === true).reduce((acc, item) => acc += item.goods_count,
+			return state.carts.filter(item => item.goods_state === true).reduce((acc, item) => acc += item.goods_number,
 				0)
 		}
 	},
@@ -28,8 +29,8 @@ export default {
 			state.carts.splice(index, 1)
 			this.commit('m_cart/setStorage')
 		},
-		goods_count(state, num) {
-			state.carts[num.index].goods_count += num.num
+		goods_number(state, num) {
+			state.carts[num.index].goods_number += num.num
 			this.commit('m_cart/setStorage')
 		},
 		checkAll(state, Isall) {
@@ -43,7 +44,7 @@ export default {
 			//如果是同样的商品让其数量++
 			let res = state.carts.find(item => item.goods_id === goods.goods_id)
 			if (res) {
-				res.goods_count++
+				res.goods_number++
 			} else {
 
 				state.carts.push(goods)

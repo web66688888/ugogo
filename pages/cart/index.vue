@@ -38,7 +38,7 @@
 								<!-- 加减 -->
 								<view class="amount">
 									<text class="reduce" @click="num(index, -1)">-</text>
-									<input type="number" :value="item.goods_count" class="number" />
+									<input type="number" :value="item.goods_number" class="number" />
 									<text class="plus" @click="num(index, +1)">+</text>
 								</view>
 							</view>
@@ -65,7 +65,8 @@
 					<label>{{ total }}</label>
 					<text>.00</text>
 				</view>
-				<navigator class="pay" url="/subpkg/pages/order/index">结算({{ totalCount }})</navigator>
+				<!-- url="/subpkg/pages/order/index" -->
+				<button class="pay" @click="payment">结算({{ totalCount }})</button>
 				<!-- <view class="pay">结算({{ totalCount }})</view> -->
 			</view>
 		</template>
@@ -79,7 +80,13 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+// import { differenceWith, isEqual } from 'lodash';
 export default {
+	data() {
+		return {
+			order_number: ''
+		};
+	},
 	computed: {
 		...mapState('m_cart', ['carts']),
 		...mapState('m_address', ['address']),
@@ -96,6 +103,48 @@ export default {
 		this.setTabar();
 	},
 	methods: {
+		async payment() {
+			//验证商品数据是否存在
+			if (!this.totalCount)
+				return uni.showToast({
+					title: '购物车是空的',
+					icon: 'none'
+				});
+			//验证收货地址是否存在
+			if (!this.address)
+				return uni.showToast({
+					title: '没有收货地址',
+					icon: 'none'
+				});
+
+			const { provinceName, cityName, countyName, detailInfo } = { ...this.address };
+
+			const { data: res1 } = await uni.$http.post('/api/public/v1/my/orders/create', {
+				order_price: this.total,
+				consignee_addr: provinceName + cityName + countyName + detailInfo,
+				goods: this.carts.filter(item => item.goods_state === true)
+			});
+			if (res1.message.order_number) this.order_number = res1.message.order_number;
+			// console.log(res1);
+			if (!this.order_number) {
+				return uni.showToast({
+					title: '订单创建失败!',
+					icon: 'none'
+				});
+			}
+			const { data: res } = await uni.$http.post('/api/public/v1/my/orders/req_unifiedorder', {
+				order_number: this.order_number
+			});
+			console.log(res);
+			uni.requestPayment({
+				...res.message.pay,
+				complete() {
+					uni.navigateTo({
+						url: '/subpkg/pages/order/index'
+					});
+				}
+			});
+		},
 		onClose(index) {
 			this.$store.commit('m_cart/del', index);
 		},
@@ -127,8 +176,8 @@ export default {
 			this.$store.commit('m_address/changeaddress', address);
 		},
 		num(index, num) {
-			if (this.carts[index].goods_count === 1 && num === -1) return;
-			this.$store.commit('m_cart/goods_count', { index, num });
+			if (this.carts[index].goods_number === 1 && num === -1) return;
+			this.$store.commit('m_cart/goods_number', { index, num });
 		},
 		checkall(e) {
 			this.$store.commit('m_cart/checkAll', !this.isAll);

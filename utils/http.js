@@ -1,6 +1,7 @@
 import {
 	$http
 } from '@escook/request-miniprogram'
+import store from "../store/store"
 uni.$http = $http
 // 'https://uinav.com'
 $http.baseUrl = 'https://api-hmugo-web.itheima.net'
@@ -10,6 +11,12 @@ $http.beforeRequest = function(options) {
 		title: '正在加载',
 		mask: true
 	})
+	// //如果
+	if (options.url.includes('/my/')) {
+		options.header = {
+			Authorization: store.state.m_address.token
+		}
+	}
 
 }
 // 请求完成之后做一些事情
@@ -20,8 +27,8 @@ $http.afterRequest = function(options) {
 			icon: 'none',
 			duration: 1500
 		})
-
 	}
+
 	// console.log(options.data.meta.status);
 	// // 隐藏加载提示
 	uni.hideLoading()

@@ -1,10 +1,12 @@
 <script>
+import { mapState } from 'vuex';
 export default {
-	onLaunch: async function() {
-		this.$store.dispatch('m_address/getToken');
+	computed: {
+		...mapState('m_address', ['token'])
 	},
+	onLaunch: async function() {},
 	onShow: function() {
-		console.log('App Show');
+		if (!this.token) this.$store.dispatch('m_address/getToken');
 	},
 	onHide: function() {
 		console.log('App Hide');

@@ -8,7 +8,8 @@ export default {
 				avatarUrl: 'http://static.botue.com/ugo/uploads/monkey.png',
 				nickName: '微信用户'
 			},
-			token: ''
+			token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjU5LCJpYXQiOjE2NTYyMzIxNTQsImV4cCI6MTAwMTY1NjIzMjE1M30.F6HKP7fozTR71W_uIE__zKa8fxVNWSZWtx2EMu3dXAw"
+
 		}
 	},
 	actions: {
