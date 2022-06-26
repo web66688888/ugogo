@@ -2,7 +2,13 @@
 	<view :style="{ height: pageHeight, overflow: 'hidden' }">
 		<search @search="disableScroll" />
 		<!-- 焦点图 -->
-		<swiper class="banner" indicator-dots indicator-color="rgba(255, 255, 255, 0.6)" indicator-active-color="#fff">
+		<swiper
+			:autoplay="true"
+			class="banner"
+			indicator-dots
+			indicator-color="rgba(255, 255, 255, 0.6)"
+			indicator-active-color="#fff"
+		>
 			<swiper-item :key="item.goods_id" v-for="item in swiperList">
 				<navigator :url="`/subpkg/pages/goods/index?${item.goods_id}`">
 					<image :src="item.image_src"></image>

@@ -1,7 +1,7 @@
 <script>
 export default {
-	onLaunch: function() {
-		console.log('App Launch');
+	onLaunch: async function() {
+		this.$store.dispatch('m_address/getToken');
 	},
 	onShow: function() {
 		console.log('App Show');

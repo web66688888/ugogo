@@ -25,8 +25,9 @@
 		"navigationBarBackgroundColor": "#ea4451",
 		"navigationBarTitleText": "黑马优购",
 		"usingComponents": {
-			"van-swipe-cell": "./static/vant/swipe-cell/index",
-			"van-button": "./static/vant/button/index"
+			"van-swipe-cell": "/wxcomponents/@vant/weapp/swipe-cell/index",
+			"van-cell-group": "/wxcomponents/@vant/weapp/cell-group/index",
+			"van-button": "/wxcomponents/@vant/weapp/button/index"
 		}
 
 	},
@@ -72,7 +73,7 @@
 				"path": "pages/list/index"
 			},
 			{
-				"path": "pages/auth/index"
+				"path": "pages/profile/index"
 			}
 		]
 	}]

@@ -3,10 +3,7 @@
 		<!-- 个人资料 -->
 		<view class="profile">
 			<view class="meta">
-				<image
-					class="avatar"
-					:src="userProfile.avatarUrl || 'http://static.botue.com/ugo/uploads/monkey.png'"
-				></image>
+				<image class="avatar" :src="userProfile.avatarUrl"></image>
 				<text class="nickname">{{ userProfile.nickName }}</text>
 			</view>
 		</view>
@@ -43,10 +40,10 @@
 		<view class="address icon-arrow" @click="openaddress">收货地址</view>
 		<!-- 其它 -->
 		<view class="extra">
+			<button class="item icon-arrow" @click="saveProfile">个人信息</button>
 			<view class="item icon-arrow" @click="makePhone">联系客服</view>
 			<button class="item icon-arrow" open-type="feedback">意见反馈</button>
 		</view>
-		<button type="primary" @click="saveProfile">获取信息</button>
 	</view>
 </template>
 
@@ -58,11 +55,17 @@ export default {
 	},
 	methods: {
 		async saveProfile() {
-			const [err, userProfile] = await uni.getUserProfile({
-				desc: '用于用户注册'
+			// uni.showToast({
+			// 	title: '仅在小程有效!'
+			// });
+			// const [err, userProfile] = await uni.getUserProfile({
+			// 	desc: '用于用户注册'
+			// });
+			// // console.log(userProfile);
+			// this.$store.commit('m_address/changeuserProfile', userProfile.userInfo);
+			uni.navigateTo({
+				url: '../../subpkg/pages/profile/index'
 			});
-			console.log(userProfile);
-			this.$store.commit('m_address/changeuserProfile', userProfile.userInfo);
 		},
 		makePhone() {
 			uni.makePhoneCall({

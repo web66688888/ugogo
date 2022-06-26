@@ -25,7 +25,7 @@
 					<!-- <view class="goods" > -->
 					<!-- 商品图片 -->
 					<van-swipe-cell v-for="(item, index) in carts" :key="item.goods_id" right-width="65" class="goods">
-						<van-cell-group class="van-cell-group">
+						<view class="van-cell-group">
 							<image class="pic" :src="item.goods_small_logo"></image>
 							<!-- 商品信息 -->
 							<view class="meta">
@@ -46,8 +46,9 @@
 							<view class="checkbox" @click="checkState(index)">
 								<icon type="success" size="20" :color="item.goods_state ? '#ea4451' : '#ccc'"></icon>
 							</view>
-						</van-cell-group>
-						<view slot="right" @click="onClose(index)" class="van-swipe-cell__right">删除</view>
+
+							<view slot="right" @click="onClose(index)" class="van-swipe-cell__right">删除</view>
+						</view>
 					</van-swipe-cell>
 					<!-- </view> -->
 				</view>
@@ -119,6 +120,9 @@ export default {
 			// 	}
 			// });
 			//方案二
+			uni.showToast({
+				title: '仅在小程有效!'
+			});
 			const [err, { errMsg, ...address }] = await uni.chooseAddress();
 			this.$store.commit('m_address/changeaddress', address);
 		},
@@ -139,7 +143,7 @@ export default {
 <style scoped lang="scss">
 .van-cell-group {
 	margin-left: 100rpx;
-	width: 600rpx;
+	width: 750rpx;
 	height: 100%;
 	display: flex;
 	justify-content: space-between;
